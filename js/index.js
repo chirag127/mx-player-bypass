@@ -46,7 +46,12 @@ function download(url, filename) {
 function downloadFile(url, setFilename) {
   const cid = url.split("/").pop();
 
-  const apiURL = `https://diskuploader.entertainvideo.com/v1/file/cdnurl?param=${cid}`;
+  const apiURL =
+    `https://` +
+    `diskuploader.` +
+    `entertainvideo.com` +
+    `/v1/file/` +
+    `cdnurl?param=${cid}`;
 
   const header = {
     Accept: "*/*",
@@ -54,7 +59,9 @@ function downloadFile(url, setFilename) {
     "Accept-Encoding": "gzip, deflate, br",
     Referer: "https://mdisk.me/",
     "User-Agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" +
+      " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82" +
+      " Safari/537.36",
   };
 
   fetch(apiURL, { headers: header })
@@ -68,7 +75,10 @@ function downloadFile(url, setFilename) {
       const wt = data.width;
       const downloadURL = data.download;
 
-      outputText = `Filename: ${fn}\nDisplay Name: ${dn}\nDuration: ${dr}\nSize: ${sz}\nHeight: ${ht}\nWidth: ${wt}\nDownload URL: ${downloadURL}`;
+      outputText =
+        `Filename: ${fn}\nDisplay Name: ` +
+        `${dn}\nDuration: ${dr}\nSize: ${sz}\nHeight:` +
+        ` ${ht}\nWidth: ${wt}\nDownload URL: ${downloadURL}`;
 
       // attach the output text to the url list     <div class="output-area">
       //     <p id="num-urls"></p>
