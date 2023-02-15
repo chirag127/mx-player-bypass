@@ -41,10 +41,12 @@ function downloadFile(url) {
       //     <ul id="urls"></ul>
       //     <button id="download-btn">Download All Videos</button>
       // </div>
-      const urlsListElement = document.getElementById("urls");
-      const li = document.createElement("li");
-      li.textContent = outputText;
-      urlsListElement.appendChild(li);
+      // const urlsListElement = document.getElementById("urls");
+      // const li = document.createElement("li");
+      // li.textContent = outputText;
+      // urlsListElement.appendChild(li);
+
+      console.log(outputText);
 
       window.open(downloadURL);
     });
