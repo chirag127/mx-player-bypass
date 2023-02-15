@@ -7,9 +7,43 @@ function extractUrls(inputText) {
 
   return urls || [];
 }
+function download(url, filename) {
+  // create a new XMLHttpRequest object
+  var xhr = new XMLHttpRequest();
+  // open the request with GET method
+  xhr.open("GET", url, true);
+  // set the responseType to blob
+  xhr.responseType = "blob";
+  // on load event handler
+  xhr.onload = function () {
+    // check if the status is 200
+    if (this.status === 200) {
+      // get the blob
+      var blob = this.response;
+      // create an object URL
+      var objectURL = URL.createObjectURL(blob);
+      // create an anchor element
+      var a = document.createElement("a");
+      // set the href attribute to the object URL
+      a.href = objectURL;
+      // set the download attribute to the filename
+      a.download = filename;
+      // append the anchor to the body
+      document.body.appendChild(a);
+      // click the link
+      a.click();
+      // revoke the object URL
+      URL.revokeObjectURL(objectURL);
+      // remove the anchor from the body
+      document.body.removeChild(a);
+    }
+  };
+  // send the request
+  xhr.send();
+}
 
 // Function to download a file from a URL
-function downloadFile(url) {
+function downloadFile(url, setFilename) {
   const cid = url.split("/").pop();
 
   const apiURL = `https://diskuploader.entertainvideo.com/v1/file/cdnurl?param=${cid}`;
@@ -48,7 +82,13 @@ function downloadFile(url) {
 
       console.log(outputText);
 
-      window.open(downloadURL);
+      if (setFilename) {
+        complete_filename = `${fn} - ${dn} - ${dr} - ${sz} - ${ht} - ${wt}.mp4`;
+
+        download(downloadURL, complete_filename);
+      } else {
+        window.open(downloadURL);
+      }
     });
 }
 
@@ -82,7 +122,15 @@ function processInput() {
   downloadBtn.addEventListener("click", () => {
     // Download each video file
     urls.forEach((url) => {
-      downloadFile(url);
+      downloadFile(url, true);
+    });
+  });
+
+  const downloadBtnWsn = document.getElementById("download-btn-wsn");
+  downloadBtnWsn.addEventListener("click", () => {
+    // Download each video file
+    urls.forEach((url) => {
+      downloadFile(url, false);
     });
   });
 }
